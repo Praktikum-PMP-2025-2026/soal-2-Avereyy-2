@@ -44,9 +44,9 @@ int main() {
         }
     }
 
-    // output (index mulai dari 1)
+    // output: panjang dua potongan pertama
     printf("MIN_DIFF %d\n", min_diff);
-    printf("CUT %d %d\n", best_i + 1, best_j + 1);
+    printf("CUT %d %d\n", best_i + 1, best_j - best_i);
 
     return 0;
 }
