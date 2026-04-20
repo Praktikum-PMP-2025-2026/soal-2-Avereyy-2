@@ -17,36 +17,31 @@ int main() {
     }
 
     int min_diff = 1000000000;
-    int best_i = 0, best_j = 0;
+    int best_first = 1, best_second = 1;
 
-    for (int i = 0; i < N - 2; i++) {
-        for (int j = i + 1; j < N - 1; j++) {
+    for (int first = 1; first <= N - 2; first++) {
+        for (int second = 1; second <= N - first - 1; second++) {
+            int end_first = first - 1;
+            int end_second = first + second - 1;
 
-            int s1 = prefix[i];
-            int s2 = prefix[j] - prefix[i];
-            int s3 = prefix[N - 1] - prefix[j];
+            int sum_first = prefix[end_first];
+            int sum_second = prefix[end_second] - prefix[end_first];
+            int sum_third = prefix[N - 1] - prefix[end_second];
 
-            int max = s1;
-            if (s2 > max) max = s2;
-            if (s3 > max) max = s3;
+            int diff = sum_first + sum_second - sum_third;
+            if (diff < 0) diff = -diff;
 
-            int min = s1;
-            if (s2 < min) min = s2;
-            if (s3 < min) min = s3;
-
-            int diff = max - min;
-
-            if (diff < min_diff) {
+            if (diff < min_diff || (diff == min_diff && (first < best_first || (first == best_first && second < best_second)))) {
                 min_diff = diff;
-                best_i = i;
-                best_j = j;
+                best_first = first;
+                best_second = second;
             }
         }
     }
 
     // output: panjang dua potongan pertama
     printf("MIN_DIFF %d\n", min_diff);
-    printf("CUT %d %d\n", best_i + 1, best_j - best_i);
+    printf("CUT %d %d\n", best_first, best_second);
 
     return 0;
 }
